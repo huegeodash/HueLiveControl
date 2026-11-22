@@ -1,0 +1,11 @@
+{
+	"geode": "5.11.2",
+	"gd": {
+		"win": "2.2081"
+	},
+	"id": "hue.livecontrol",
+	"name": "Hue Live Control",
+	"version": "v1.0.0",
+	"developer": "Hue",
+	"description": "Steruj predkoscia i resetem levelu przez adresy lokalne (TikFinity)."
+}
