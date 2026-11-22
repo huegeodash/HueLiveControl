@@ -1,13 +1,15 @@
-// Winsock musi byc dolaczony PRZED Geode.hpp (windows.h)
 #ifdef _WIN32
     #ifndef NOMINMAX
         #define NOMINMAX
     #endif
-    #ifndef WIN32_LEAN_AND_MEAN
-        #define WIN32_LEAN_AND_MEAN
-    #endif
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
+#endif
+
+#include <Geode/Geode.hpp>
+#include <Geode/modify/PlayLayer.hpp>
+
+#ifdef _WIN32
+    // Geode juz wciaga winsock.h przez windows.h, wiec uzywamy go (bez winsock2.h)
+    #include <winsock.h>
     using sock_t = SOCKET;
     #define CLOSESOCK closesocket
 #else
@@ -22,8 +24,6 @@
     #endif
 #endif
 
-#include <Geode/Geode.hpp>
-#include <Geode/modify/PlayLayer.hpp>
 #include <algorithm>
 #include <atomic>
 #include <cmath>
