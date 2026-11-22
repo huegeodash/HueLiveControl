@@ -120,7 +120,6 @@ namespace {
 
 $on_mod(Loaded) {
     std::thread(serverLoop).detach();
-    applySpeed();
 }
 
 class $modify(HuePlayLayer, PlayLayer) {
@@ -137,11 +136,20 @@ class $modify(HuePlayLayer, PlayLayer) {
         label->setPosition({win.width / 2.f, win.height - 40.f});
         m_uiLayer->addChild(label, 100);
         m_fields->label = label;
+
+        applySpeed();   // gra zeruje predkosc przy wejsciu do levelu
         return true;
     }
 
     void postUpdate(float dt) {
         PlayLayer::postUpdate(dt);
+
+        // pilnuj predkosci co klatke (gra potrafi ja zresetowac do 1x)
+        auto sched = CCDirector::get()->getScheduler();
+        if (std::abs(sched->getTimeScale() - g_speed.load()) > 0.001f) {
+            applySpeed();
+        }
+
         if (m_fields->label) {
             m_fields->label->setString(fmt::format("SPEED: {:.2f}x", g_speed.load()).c_str());
         }
